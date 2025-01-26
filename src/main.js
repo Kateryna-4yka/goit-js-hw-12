@@ -16,6 +16,7 @@ const ulGallery = document.querySelector (`.ul-gallery`);
 const button = document.querySelector ('.button');
 const loader = document.querySelector ('.loader');
 const loadButton = document.querySelector ('.loadButton');
+
 form.addEventListener (`submit`, request);
 
 let page = 1;
@@ -71,7 +72,6 @@ ulGallery.insertAdjacentHTML('beforeend', gallaryCard);
 loader.classList.toggle (`visually-hidden`);
 //спустошуємо інпут у формі
 form.reset();
-
 //відмальовуємо великі зображення за допомогою бібліотеки SimpleLightbox
 const elemSimpleLightbox = new SimpleLightbox(`.ul-gallery a`, {
   captionsData: `alt`, 
@@ -107,6 +107,16 @@ if (totalPages === page)
   
   //додаємо на сторінку
   ulGallery.insertAdjacentHTML('beforeend', gallaryCard);
+
+ //додаємо прокрутку на подвійну висоту карточки
+ 
+ const liElement = document.querySelector (`.li-gallery`);
+ if (liElement){
+  let domRect = liElement.getBoundingClientRect();
+  let height = domRect.height * 2; 
+  scrollBy({ top: height, left: 0, behavior: 'smooth'});
+ };
+
   //ховаємо лоадер після відмальовування
   loader.classList.toggle (`visually-hidden`);
   
@@ -118,3 +128,6 @@ if (totalPages === page)
   }
   
    catch (er) {console.log(er);}}
+
+  
+

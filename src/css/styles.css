@@ -111,7 +111,7 @@ button {
   border: none;
   border-radius: 8px;
   padding: 8px 16px;
-  width: 91px;
+  width: auto;
   height: 40px;
 }
 button:hover {
@@ -127,6 +127,7 @@ button:hover {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
+  margin-bottom: 32px;
 }
 
 .li-gallery {
@@ -171,7 +172,11 @@ letter-spacing: 0.04em;
 color: #2e2f42;
 }
 
-
+.loadButton {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .loader {
   width: 175px;
@@ -223,5 +228,4 @@ color: #2e2f42;
     transform: rotate(-360deg);
   }
 }
-
 

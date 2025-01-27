@@ -9,7 +9,10 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 import {httpRequest} from "./js/pixabay-api";
 import {createCart} from "./js/render-functions";
 
-
+//відмальовуємо великі зображення за допомогою бібліотеки SimpleLightbox
+const elemSimpleLightbox = new SimpleLightbox(`.ul-gallery a`, {
+  captionsData: `alt`, 
+});
 
 const form = document.querySelector (`.form`);
 const ulGallery = document.querySelector (`.ul-gallery`);
@@ -35,7 +38,12 @@ event.preventDefault();
 valueInfo = event.currentTarget.elements.user_request.value.trim(); 
 
 //перевіряємо, щоб не вводили пусте в інпут + HYML перевірка задана
-if (valueInfo ==='') {button.disabled = true; return;}
+if (valueInfo ==='') {
+  button.disabled = true; 
+
+  loader.classList.add (`visually-hidden`);
+  loadButton.classList.add (`visually-hidden`);
+  return;}
 
 //робимо запит за пайдж 1, щоб кожен новий запит ішов за першою сторінкою та галерея очищувалася від картинок
 page = 1;
@@ -50,6 +58,7 @@ if (serverInform.data.hits.length === 0) {
     position: 'topRight' ,
     message: 'Sorry, there are no images matching your search query. Please try again!',
 });
+loadButton.classList.add (`visually-hidden`);
 ulGallery.innerHTML = '';
 form.reset();
 return;}
@@ -72,13 +81,14 @@ ulGallery.insertAdjacentHTML('beforeend', gallaryCard);
 loader.classList.toggle (`visually-hidden`);
 //спустошуємо інпут у формі
 form.reset();
-//відмальовуємо великі зображення за допомогою бібліотеки SimpleLightbox
-const elemSimpleLightbox = new SimpleLightbox(`.ul-gallery a`, {
-  captionsData: `alt`, 
-});
+
 elemSimpleLightbox.refresh();
 }
- catch (er) { alert (er)}}
+ catch (er) {
+  iziToast.error({
+    position: 'topRight' ,
+    message: 'Sorry, data processing error. Please try again!',
+})}}
 
 
 
@@ -120,14 +130,15 @@ if (totalPages === page)
   //ховаємо лоадер після відмальовування
   loader.classList.toggle (`visually-hidden`);
   
-  //відмальовуємо великі зображення за допомогою бібліотеки SimpleLightbox
-  const elemSimpleLightbox = new SimpleLightbox(`.ul-gallery a`, {
-    captionsData: `alt`, 
-  });
+  //відмальовуємо великі забраження
   elemSimpleLightbox.refresh();
   }
   
-   catch (er) {console.log(er);}}
+  catch (er) {
+    iziToast.error({
+      position: 'topRight' ,
+      message: 'Sorry, data processing error. Please try again!',
+  })}}
 
   
 
